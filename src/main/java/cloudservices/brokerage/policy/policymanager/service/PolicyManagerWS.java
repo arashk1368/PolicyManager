@@ -38,7 +38,7 @@ public class PolicyManagerWS {
 
     @WebMethod(operationName = "applyPolicy")
     public Service applyPolicy(@WebParam(name = "applicablePolicies") Set<Policy> applicablePolicies,
-            @WebParam(name = "currentServiceLevel") Service currentServiceLevel,
+            @WebParam(name = "currentServiceLevel") String currentServiceLevel,
             @WebParam(name = "currentState") State currentState,
             @WebParam(name = "nextState") State nextState,
             @WebParam(name = "initialState") State initialState,
@@ -49,7 +49,9 @@ public class PolicyManagerWS {
         if (applicablePolicies == null) {
             throw new IllegalArgumentException("Applicable Policies can not be null");
         } else if (applicablePolicies.isEmpty()) {
-            return currentServiceLevel;
+            Service temp=new Service();
+            temp.setServicesStr(currentServiceLevel);
+            return temp;
         }
         if (currentServiceLevel == null) {
             throw new IllegalArgumentException("Current Service Level can not be null");

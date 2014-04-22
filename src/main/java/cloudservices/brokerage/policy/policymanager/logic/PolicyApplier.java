@@ -19,19 +19,20 @@ import java.util.Set;
  * @author Arash Khodadadi http://www.arashkhodadadi.com/
  */
 public class PolicyApplier {
-
+    
     private final PolicyDAO policyDAO;
     private final RepairChecker repairChecker;
-
+    
     public PolicyApplier(State initialState, State goalState) {
         this.policyDAO = new PolicyDAO();
         this.repairChecker = new RepairChecker(initialState, goalState);
     }
-
+    
     public Service apply(Set<Policy> applicablePolicies,
-            Service currentServiceLevel, State currentState, State nextState)
+            String currentServiceLevel, State currentState, State nextState)
             throws DAOException {
-        Service applied = currentServiceLevel;
+        Service applied = new Service();
+        applied.setServicesStr(currentServiceLevel);
         PolicySelector policySelector = new PolicySelector(applicablePolicies);
         for (Iterator<Policy> it = policySelector.getIterator(); it.hasNext();) {
             Policy policy = it.next();
@@ -42,8 +43,6 @@ public class PolicyApplier {
             }
             if (repairChecker.checkRepair(actions, currentState, nextState)) {
                 applied = new Service();
-                applied.setId(-1L);
-                applied.setName("TEMP");
                 applied.addServiceLevel(actions);
                 break;
             }
