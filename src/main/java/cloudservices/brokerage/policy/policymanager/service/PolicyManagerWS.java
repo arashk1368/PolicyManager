@@ -56,10 +56,10 @@ public class PolicyManagerWS {
         if (currentServiceLevel == null) {
             throw new IllegalArgumentException("Current Service Level can not be null");
         }
-        if (currentState != null) {
+        if (currentState == null) {
             throw new IllegalArgumentException("Current state can not be null");
         }
-        if (nextState != null) {
+        if (nextState == null) {
             throw new IllegalArgumentException("Next state can not be null");
         }
         if (initialState == null) {
